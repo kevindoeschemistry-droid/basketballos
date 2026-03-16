@@ -17,7 +17,8 @@ export function Topbar() {
       const supabase = createClient();
       await supabase.auth.signOut();
     }
-    router.push("/login");
+    // Use window.location to force a full page reload so middleware clears session
+    window.location.href = "/login";
   }
 
   return (
@@ -54,7 +55,7 @@ export function Topbar() {
             </span>
           )}
           <button
-            onClick={() => router.push("/admin")}
+            onClick={() => router.push("/profile")}
             className="flex items-center justify-center h-10 w-10 rounded-lg hover:bg-muted text-muted-foreground"
             aria-label="Profile"
           >

@@ -65,7 +65,8 @@ export async function middleware(request: NextRequest) {
     pathname.startsWith("/transport") ||
     pathname.startsWith("/fundraising") ||
     pathname.startsWith("/store") ||
-    pathname.startsWith("/admin")
+    pathname.startsWith("/admin") ||
+    pathname.startsWith("/profile")
   ) {
     if (!user) {
       const loginUrl = request.nextUrl.clone();
