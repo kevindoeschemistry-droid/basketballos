@@ -38,6 +38,8 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+  --color-accent-primary: var(--accent-primary);
+  --color-accent-primary-foreground: var(--accent-primary-foreground);
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -48,82 +50,149 @@
 }
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.809 0.105 251.813);
-  --chart-2: oklch(0.623 0.214 259.815);
-  --chart-3: oklch(0.546 0.245 262.881);
-  --chart-4: oklch(0.488 0.243 264.376);
-  --chart-5: oklch(0.424 0.199 265.638);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  /* BasketballOS: Navy blue primary, basketball orange accent */
+  --accent-primary: #e86c2f;
+  --accent-primary-foreground: #ffffff;
+
+  --background: #f8f9fb;
+  --foreground: #0f172a;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --popover: #ffffff;
+  --popover-foreground: #0f172a;
+  --primary: #1e3a5f;
+  --primary-foreground: #ffffff;
+  --secondary: #eef2f7;
+  --secondary-foreground: #0f172a;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  --accent: #fff3ed;
+  --accent-foreground: #9a3412;
+  --destructive: #dc2626;
+  --border: #e2e8f0;
+  --input: #e2e8f0;
+  --ring: #1e3a5f;
+  --chart-1: #1e3a5f;
+  --chart-2: #e86c2f;
+  --chart-3: #2d5a8e;
+  --chart-4: #f59e0b;
+  --chart-5: #16a34a;
+  --radius: 0.75rem;
+  --sidebar: #0f2137;
+  --sidebar-foreground: #e2e8f0;
+  --sidebar-primary: #e86c2f;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #1a3352;
+  --sidebar-accent-foreground: #e2e8f0;
+  --sidebar-border: #1a3352;
+  --sidebar-ring: #e86c2f;
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.809 0.105 251.813);
-  --chart-2: oklch(0.623 0.214 259.815);
-  --chart-3: oklch(0.546 0.245 262.881);
-  --chart-4: oklch(0.488 0.243 264.376);
-  --chart-5: oklch(0.424 0.199 265.638);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --accent-primary: #f59a6c;
+  --accent-primary-foreground: #0f172a;
+
+  --background: #0b1222;
+  --foreground: #e2e8f0;
+  --card: #111d2e;
+  --card-foreground: #e2e8f0;
+  --popover: #111d2e;
+  --popover-foreground: #e2e8f0;
+  --primary: #3b82f6;
+  --primary-foreground: #ffffff;
+  --secondary: #1e293b;
+  --secondary-foreground: #e2e8f0;
+  --muted: #1e293b;
+  --muted-foreground: #94a3b8;
+  --accent: #2a1a0f;
+  --accent-foreground: #f59a6c;
+  --destructive: #ef4444;
+  --border: rgba(255, 255, 255, 0.08);
+  --input: rgba(255, 255, 255, 0.12);
+  --ring: #3b82f6;
+  --chart-1: #3b82f6;
+  --chart-2: #f59a6c;
+  --chart-3: #60a5fa;
+  --chart-4: #fbbf24;
+  --chart-5: #4ade80;
+  --sidebar: #070d17;
+  --sidebar-foreground: #e2e8f0;
+  --sidebar-primary: #f59a6c;
+  --sidebar-primary-foreground: #0f172a;
+  --sidebar-accent: #111d2e;
+  --sidebar-accent-foreground: #e2e8f0;
+  --sidebar-border: rgba(255, 255, 255, 0.08);
+  --sidebar-ring: #f59a6c;
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+  html {
+    font-size: 18px;
+    @apply font-sans;
+    scroll-behavior: smooth;
+  }
   body {
     @apply bg-background text-foreground;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
-  html {
-    @apply font-sans;
+  h1 {
+    @apply text-3xl font-bold tracking-tight;
   }
+  h2 {
+    @apply text-2xl font-semibold tracking-tight;
+  }
+  h3 {
+    @apply text-xl font-semibold;
+  }
+}
+
+/* Frosted glass utility */
+.glass {
+  background: rgba(248, 249, 251, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+.dark .glass {
+  background: rgba(11, 18, 34, 0.8);
+}
+
+/* Pill button */
+.btn-pill {
+  @apply inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-medium transition-all;
+}
+.btn-pill:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(30, 58, 95, 0.15);
+}
+.btn-primary {
+  @apply bg-primary text-primary-foreground;
+}
+.btn-primary:hover {
+  background: #163050;
+  box-shadow: 0 4px 16px rgba(30, 58, 95, 0.3);
+}
+.btn-outline {
+  @apply border border-border bg-background text-foreground;
+}
+.btn-outline:hover {
+  @apply border-primary/30 bg-secondary;
+}
+
+/* Card hover */
+.card-hover {
+  @apply rounded-xl border border-border bg-card transition-all;
+}
+.card-hover:hover {
+  border-color: rgba(232, 108, 47, 0.3);
+  box-shadow: 0 4px 20px rgba(30, 58, 95, 0.06);
+  transform: translateY(-2px);
+}
+
+/* Accent text utility */
+.text-accent-primary {
+  color: var(--accent-primary);
 }
