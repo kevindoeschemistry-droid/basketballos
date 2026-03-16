@@ -110,52 +110,69 @@ export function TenantProvider({ children }: { children: ReactNode }) {
           .eq("id", user.id)
           .single();
 
-        // Fetch first team membership (user's primary team)
+        // Fetch first team membership (simple query — no nested joins)
         const { data: membership } = await supabase
           .from("team_memberships")
-          .select(
-            `
-            role,
-            teams (
-              id, name, slug, season, level, mascot,
-              primary_color, secondary_color, logo_url,
-              organization_id,
-              organizations (
-                id, name, slug, logo_url
-              )
-            )
-          `
-          )
+          .select("role, team_id")
           .eq("profile_id", user.id)
           .limit(1)
           .single();
 
-        /* eslint-disable @typescript-eslint/no-explicit-any */
-        const teamData = (membership as any)?.teams as Record<string, unknown> | null;
-        const orgData = (teamData as any)?.organizations as Record<string, unknown> | null;
-        /* eslint-enable @typescript-eslint/no-explicit-any */
+        // Fetch team details separately
+        let teamData: {
+          id: string;
+          name: string;
+          slug: string;
+          season: string | null;
+          level: string | null;
+          mascot: string | null;
+          primary_color: string;
+          secondary_color: string;
+          logo_url: string | null;
+          organization_id: string;
+        } | null = null;
+
+        if (membership?.team_id) {
+          const { data: team } = await supabase
+            .from("teams")
+            .select(
+              "id, name, slug, season, level, mascot, primary_color, secondary_color, logo_url, organization_id"
+            )
+            .eq("id", membership.team_id)
+            .single();
+          teamData = team;
+        }
+
+        // Fetch organization separately
+        let orgData: {
+          id: string;
+          name: string;
+          slug: string;
+          logo_url: string | null;
+        } | null = null;
+
+        if (teamData?.organization_id) {
+          const { data: org } = await supabase
+            .from("organizations")
+            .select("id, name, slug, logo_url")
+            .eq("id", teamData.organization_id)
+            .single();
+          orgData = org;
+        }
 
         setTenant({
-          organization: orgData
-            ? {
-                id: orgData.id as string,
-                name: orgData.name as string,
-                slug: orgData.slug as string,
-                logo_url: orgData.logo_url as string | null,
-              }
-            : null,
+          organization: orgData,
           team: teamData
             ? {
-                id: teamData.id as string,
-                name: teamData.name as string,
-                slug: teamData.slug as string,
-                season: teamData.season as string | null,
-                level: teamData.level as string | null,
-                mascot: teamData.mascot as string | null,
-                primary_color: (teamData.primary_color as string) || "#1e3a5f",
-                secondary_color:
-                  (teamData.secondary_color as string) || "#e86c2f",
-                logo_url: teamData.logo_url as string | null,
+                id: teamData.id,
+                name: teamData.name,
+                slug: teamData.slug,
+                season: teamData.season,
+                level: teamData.level,
+                mascot: teamData.mascot,
+                primary_color: teamData.primary_color || "#1e3a5f",
+                secondary_color: teamData.secondary_color || "#e86c2f",
+                logo_url: teamData.logo_url,
               }
             : null,
           profile: profile
