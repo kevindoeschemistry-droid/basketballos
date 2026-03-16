@@ -103,88 +103,42 @@ export function TenantProvider({ children }: { children: ReactNode }) {
           return;
         }
 
-        // Fetch profile
-        const { data: profile } = await supabase
-          .from("profiles")
-          .select("id, full_name, email, role, avatar_url")
-          .eq("id", user.id)
-          .single();
+        // Single RPC call — bypasses PostgREST schema resolution
+        const { data: tenantRpc, error: rpcError } = await supabase.rpc(
+          "get_my_tenant"
+        );
 
-        // Fetch first team membership (simple query — no nested joins)
-        const { data: membership } = await supabase
-          .from("team_memberships")
-          .select("role, team_id")
-          .eq("profile_id", user.id)
-          .limit(1)
-          .single();
-
-        // Fetch team details separately
-        let teamData: {
-          id: string;
-          name: string;
-          slug: string;
-          season: string | null;
-          level: string | null;
-          mascot: string | null;
-          primary_color: string;
-          secondary_color: string;
-          logo_url: string | null;
-          organization_id: string;
-        } | null = null;
-
-        if (membership?.team_id) {
-          const { data: team } = await supabase
-            .from("teams")
-            .select(
-              "id, name, slug, season, level, mascot, primary_color, secondary_color, logo_url, organization_id"
-            )
-            .eq("id", membership.team_id)
-            .single();
-          teamData = team;
+        if (rpcError || !tenantRpc) {
+          console.error("Tenant RPC error:", rpcError);
+          // Fallback: set profile from auth metadata so the app still works
+          setTenant({
+            organization: null,
+            team: null,
+            profile: {
+              id: user.id,
+              full_name:
+                (user.user_metadata?.full_name as string) ||
+                user.email ||
+                "User",
+              email: user.email || null,
+              role: (user.user_metadata?.role as string) || "player",
+              avatar_url: null,
+            },
+            membership: null,
+            loading: false,
+          });
+          return;
         }
 
-        // Fetch organization separately
-        let orgData: {
-          id: string;
-          name: string;
-          slug: string;
-          logo_url: string | null;
-        } | null = null;
-
-        if (teamData?.organization_id) {
-          const { data: org } = await supabase
-            .from("organizations")
-            .select("id, name, slug, logo_url")
-            .eq("id", teamData.organization_id)
-            .single();
-          orgData = org;
-        }
+        /* eslint-disable @typescript-eslint/no-explicit-any */
+        const t = tenantRpc as any;
+        /* eslint-enable @typescript-eslint/no-explicit-any */
 
         setTenant({
-          organization: orgData,
-          team: teamData
-            ? {
-                id: teamData.id,
-                name: teamData.name,
-                slug: teamData.slug,
-                season: teamData.season,
-                level: teamData.level,
-                mascot: teamData.mascot,
-                primary_color: teamData.primary_color || "#1e3a5f",
-                secondary_color: teamData.secondary_color || "#e86c2f",
-                logo_url: teamData.logo_url,
-              }
-            : null,
-          profile: profile
-            ? {
-                id: profile.id,
-                full_name: profile.full_name,
-                email: profile.email,
-                role: profile.role,
-                avatar_url: profile.avatar_url,
-              }
-            : null,
-          membership: membership ? { role: membership.role } : null,
+          organization: t.organization || null,
+          team: t.team || null,
+          profile: t.profile || null,
+          membership: t.membership || null,
           loading: false,
         });
       } catch {
